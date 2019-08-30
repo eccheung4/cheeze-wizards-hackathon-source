@@ -5,11 +5,11 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| contracts/BasicTournament.sol | c99c11a12fd7166ba11a42138bd2990af2921440 |
-| contracts/InauguralGateKeeper.sol | ad4dd5419361f2f9496622959d6994068947d23d |
-| contracts/ThreeAffinityDuelResolver.sol | ce871926c5c8f3160dee2abce0e226ea8a793c0c |
-| contracts/WizardGuild.sol | dce5e0385d22f82e7e4e7244c598f70ab989f09f |
-| contracts/WizardPresale.sol | dd9760ee66f9fc9971ec36b2212b34dfd47ca72d |
+| contracts/BasicTournament.sol | 8e7c7dc6ab38341c38eb65da2a6a5c6a949484d6 |
+| contracts/InauguralGateKeeper.sol | 3f0eb94420fa8e21fded37a9e3701bfc0dbd7494 |
+| contracts/ThreeAffinityDuelResolver.sol | 7fe11f95f7ea25633ef5afa3477f32733d4d4869 |
+| contracts/WizardGuild.sol | 43eced2e58a27cf76d4041f40179fb6f37579e33 |
+| contracts/WizardPresale.sol | 1f20f65c634cb714db9574952a70695b75afdb12 |
 
 
 ### Contracts Description Table
@@ -57,7 +57,7 @@
 ||||||
 | **DuelResolverInterface** | Implementation | DuelResolverInterfaceId, ERC165Interface |||
 | └ | isValidMoveSet | Public ❗️ |   |NO❗️ |
-| └ | isValidAffinity | Public ❗️ |   |NO❗️ |
+| └ | isValidAffinity | External ❗️ |   |NO❗️ |
 | └ | resolveDuel | Public ❗️ |   |NO❗️ |
 ||||||
 | **AccessControl** | Implementation |  |||
@@ -69,6 +69,8 @@
 | └ | setCfo | Public ❗️ | 🛑  | onlyCEO |
 ||||||
 | **TournamentTimeAbstract** | Implementation | AccessControl |||
+| └ | getTimeParameters | External ❗️ |   |NO❗️ |
+| └ | getBlueMoldParameters | External ❗️ |   |NO❗️ |
 | └ | \<Constructor\> | Internal 🔒 | 🛑  | AccessControl |
 | └ | _isRevivalPhase | Internal 🔒 |   | |
 | └ | _isEliminationPhase | Internal 🔒 |   | |
@@ -81,8 +83,8 @@
 | └ | _ascensionDuelTimeout | Internal 🔒 |   | |
 | └ | canChallengeAscendingWizard | Internal 🔒 |   | |
 | └ | _blueMoldPower | Internal 🔒 |   | |
-| └ | pause | Public ❗️ | 🛑  | onlyCOO |
-| └ | isPaused | Public ❗️ |   |NO❗️ |
+| └ | pause | External ❗️ | 🛑  | onlyCOO |
+| └ | isPaused | External ❗️ |   |NO❗️ |
 ||||||
 | **TournamentInterfaceId** | Implementation |  |||
 ||||||
@@ -91,8 +93,11 @@
 | └ | enterWizards | External ❗️ |  💵 |NO❗️ |
 | └ | isActive | External ❗️ |   |NO❗️ |
 | └ | powerScale | External ❗️ |   |NO❗️ |
+| └ | destroy | External ❗️ | 🛑  |NO❗️ |
 ||||||
 | **BasicTournament** | Implementation | TournamentInterface, TournamentTimeAbstract, WizardConstants, DuelResolverInterfaceId |||
+| └ | getRemainingWizards | External ❗️ |   |NO❗️ |
+| └ | getAscendingWizardId | External ❗️ |   |NO❗️ |
 | └ | \<Constructor\> | Public ❗️ | 🛑  | TournamentTimeAbstract |
 | └ | \<Fallback\> | External ❗️ |  💵 |NO❗️ |
 | └ | supportsInterface | External ❗️ |   |NO❗️ |
@@ -111,7 +116,7 @@
 | └ | _checkChallenge | Internal 🔒 |   | |
 | └ | challengeAscending | External ❗️ | 🛑  | duringFightWindow onlyWizardController |
 | └ | acceptAscensionChallenge | External ❗️ | 🛑  | duringFightWindow onlyWizardController |
-| └ | completeAscension | Public ❗️ | 🛑  | duringResolutionWindow |
+| └ | completeAscension | External ❗️ | 🛑  | duringResolutionWindow |
 | └ | oneSidedCommit | External ❗️ | 🛑  | duringFightWindow onlyWizardController exists |
 | └ | cancelCommitment | External ❗️ | 🛑  | onlyWizardController |
 | └ | doubleCommit | External ❗️ | 🛑  | duringFightWindow |
@@ -168,6 +173,7 @@
 | └ | enterWizards | External ❗️ |  💵 |NO❗️ |
 | └ | isActive | External ❗️ |   |NO❗️ |
 | └ | powerScale | External ❗️ |   |NO❗️ |
+| └ | destroy | External ❗️ | 🛑  |NO❗️ |
 ||||||
 | **AccessControl** | Implementation |  |||
 | └ | \<Constructor\> | Public ❗️ | 🛑  | |
@@ -190,6 +196,7 @@
 | └ | isContract | Internal 🔒 |   | |
 ||||||
 | **InauguralGateKeeper** | Implementation | AccessControl, WizardConstants, Address, WizardGuildInterfaceId, TournamentInterfaceId |||
+| └ | getTournamentPowerScale | External ❗️ |   |NO❗️ |
 | └ | \<Constructor\> | Public ❗️ | 🛑  | AccessControl |
 | └ | \<Fallback\> | External ❗️ |  💵 |NO❗️ |
 | └ | registerTournament | External ❗️ | 🛑  | onlyCOO |
@@ -205,6 +212,7 @@
 | └ | _potContribution | Internal 🔒 |   | |
 | └ | withdraw | External ❗️ | 🛑  | onlyCFO |
 | └ | destroy | External ❗️ | 🛑  | onlyCOO |
+| └ | destroyTournament | External ❗️ | 🛑  | onlyCOO |
 | └ | _transferRefund | Private 🔐 | 🛑  | |
 ||||||
 | **ERC165Interface** | Interface |  |||
@@ -214,7 +222,7 @@
 ||||||
 | **DuelResolverInterface** | Implementation | DuelResolverInterfaceId, ERC165Interface |||
 | └ | isValidMoveSet | Public ❗️ |   |NO❗️ |
-| └ | isValidAffinity | Public ❗️ |   |NO❗️ |
+| └ | isValidAffinity | External ❗️ |   |NO❗️ |
 | └ | resolveDuel | Public ❗️ |   |NO❗️ |
 ||||||
 | **ThreeAffinityDuelResolver** | Implementation | DuelResolverInterface |||
@@ -230,7 +238,7 @@
 | **WizardConstants** | Implementation |  |||
 ||||||
 | **ERC165Query** | Implementation |  |||
-| └ | doesContractImplementInterface | Public ❗️ |   |NO❗️ |
+| └ | doesContractImplementInterface | Internal 🔒 |   | |
 | └ | noThrowCall | Internal 🔒 |   | |
 ||||||
 | **IERC165** | Interface |  |||
@@ -303,6 +311,7 @@
 | └ | isValidSignature | External ❗️ |   |NO❗️ |
 ||||||
 | **WizardGuild** | Implementation | AccessControl, WizardNFT, WizardGuildInterface, ERC165Query |||
+| └ | getNextWizardIndex | External ❗️ |   |NO❗️ |
 | └ | \<Constructor\> | Public ❗️ | 🛑  | AccessControl |
 | └ | openSeries | External ❗️ | 🛑  | onlyCOO |
 | └ | closeSeries | External ❗️ | 🛑  | duringSeries |
@@ -312,7 +321,7 @@
 | └ | mintReservedWizards | External ❗️ | 🛑  | onlyMinter |
 | └ | setMetadata | External ❗️ | 🛑  | duringSeries |
 | └ | setAffinity | External ❗️ | 🛑  | onlyMinter |
-| └ | isApprovedOrOwner | Public ❗️ |   |NO❗️ |
+| └ | isApprovedOrOwner | External ❗️ |   |NO❗️ |
 | └ | verifySignature | Public ❗️ |   |NO❗️ |
 | └ | verifySignatures | External ❗️ |   |NO❗️ |
 | └ | _validSignatureForAddress | Internal 🔒 |   | |
